@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <conio.h>
+#include <cstdlib>
 #include <Windows.h>
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
@@ -88,6 +89,7 @@ char WczytajWybor()
 
 int main()
 {
+    SetConsoleOutputCP(1250);
     int i;
 
     string haslo; // = "wielka antarktyda";
@@ -109,6 +111,7 @@ int main()
     strum.open("Data.txt");
 
     setlocale(LC_CTYPE, "Polish");
+    
 
     while (!strum.eof())
     {
