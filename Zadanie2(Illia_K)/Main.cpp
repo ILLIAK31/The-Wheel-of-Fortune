@@ -2,10 +2,9 @@
 #include <conio.h>
 #include <cstdlib>
 #include <Windows.h>
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
+#include <stdlib.h>     
+#include <time.h>      
 #include <string>  
-#include <fstream>
 #include <vector>
 #include <cstring>
 #include <cassert>
@@ -16,9 +15,7 @@ using namespace std;
 #include "Gracz.hpp"
 
 Gracz* gracze = new Gracz[3];
-
 int kolejka = 0;
-
 int Kolo[] = { -1, 0, 100, 200, 100, 200, 100, 200, 500, 500, 1000, 1000, 1500, 2000, 3000, 5000 };
 
 int jestSamogloska(char c)
@@ -31,91 +28,21 @@ int jestSamogloska(char c)
 
 }
 
-char WczytajZnak()
-{
-    string letter;
-    cin >> letter;
-
-    while (letter.length() != 1)
-    {
-        cout << endl << "Type a single letter and press <enter>: ";
-        cin >> letter;
-    }
-
-    for (auto& c : letter)  // & zapamietuje modyfikacje w petli & - referencja
-        c = toupper(c);
-
-    return letter[0];
-
-}
-
-char WczytajWybor()
-{
-    char wybor;
-    wybor = WczytajZnak();
-
-    while (wybor != '1' && wybor != '2')
-    {
-        cout << endl << "Wybierz [1-2]: ";
-        cin >> wybor;
-    }
-
-    return wybor;
-
-}
-
-
 int main()
 {
     SetConsoleOutputCP(1250);
-    int i;
-
-    string haslo; // "wielka antarktyda";
-    string proba;
-    char literka;
-    int n;
-    int maska[100];
-    int suma = 0;
-    int zgadl = 0;
-    int sa_spolgloski = 0;
-    int kwota = 0;
-    char wybor;
+    int i , n , maska[100] , suma = 0 , zgadl = 0 , sa_spolgloski = 0 , kwota = 0;
+    string haslo , proba;
+    char literka , wybor;
     srand(time(NULL));
     string rezultat;
     vector<string> hasla;
     int j;
 
-    ifstream strum;
-    strum.open("Data.txt");
-
-    setlocale(LC_CTYPE, "Polish");
-    
-
-    while (!strum.eof())
-    {
-        string s;
-        //strum >> s;
-        getline(strum, s);
-        //cout << s << endl;
-        hasla.push_back(s);
-
-    }
-
-    strum.close();
-
-
-
-
-    //for (i = 0; i < hasla.size(); i++)
-        //cout << hasla[i] << endl;
-
-
+    gracze->Read_File(*&hasla);
 
     for (string item : hasla)
         cout << item << endl;
-
-
-
     cout << endl << endl;
 
     assert(hasla.size() > 0);
@@ -136,9 +63,6 @@ int main()
             maska[i] = 1;
     }
 
-
-
-
     do
     {
         // cout << "\033[2J";
@@ -155,7 +79,6 @@ int main()
 
         cout << "\033[0m";
         cout << endl;
-
 
         sa_spolgloski = 0;
         kwota = 0;
@@ -179,7 +102,7 @@ int main()
 
         // TODO tylko 1 i 2, nie mozna wprowadzac liter
 
-        wybor = WczytajWybor();
+        wybor = gracze->WczytajWybor(gracze);
 
         if (wybor == '1')
         {
@@ -248,7 +171,7 @@ int main()
 
 
 
-        literka = WczytajZnak();
+        literka = gracze->WczytajZnak();
 
 
         zgadl = 0;
