@@ -7,6 +7,20 @@ using namespace std;
 
 #include "Gracz.hpp"
 
+int Gracz::KOLO(Gracz* gracze,int& i)
+{
+    if (gracze->Kolo[i] == 0)
+        return 0;
+    if (gracze->Kolo[i] == -1)
+        return -1;
+}
+
+void Gracz::Kwota_KOLO(Gracz* gracze, int& i, int& kwota)
+{
+    cout << "\033[1;34m" << Kolo[i] << "\033[0m" << endl;
+    kwota = Kolo[i];
+}
+
 void Gracz::Set_Name(Gracz* gracze)
 {
     gracze[0].imie = "Bryanusz";
