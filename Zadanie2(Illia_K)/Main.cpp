@@ -13,35 +13,13 @@
 
 using namespace std;
 
-struct Gracz {
-    string imie;
-    int kasa = 0;
-    int portfel = 0; //kasa z wygranych rund
-};
+#include "Gracz.hpp"
 
-struct Gracz gracze[3];
+Gracz* gracze = new Gracz[3];
 
 int kolejka = 0;
 
 int Kolo[] = { -1, 0, 100, 200, 100, 200, 100, 200, 500, 500, 1000, 1000, 1500, 2000, 3000, 5000 };
-// -1 bankrut
-// 0 strata kolejki
-
-
-void textPlayers()
-{
-    int i;
-    std::cout << "\n";
-    for (i = 0; i < 3; i++) {
-        if (i == kolejka) {
-            cout << "\033[1;34m";
-        }
-        cout << gracze[i].imie << "\t" << gracze[i].kasa << "\n";
-        cout << "\033[0m";
-
-    }
-    cout << "\n";
-}
 
 int jestSamogloska(char c)
 {
@@ -92,7 +70,7 @@ int main()
     SetConsoleOutputCP(1250);
     int i;
 
-    string haslo; // = "wielka antarktyda";
+    string haslo; // "wielka antarktyda";
     string proba;
     char literka;
     int n;
@@ -143,7 +121,6 @@ int main()
     assert(hasla.size() > 0);
     j = rand() % hasla.size(); // losujemy j-te haslo z przedzialu 0 ... size - 1
     //cout << hasla[j];
-
     haslo = hasla[j];
     n = haslo.size();
 
@@ -195,7 +172,7 @@ int main()
 
 
         //cout << gracze[kolejka].imie << " " << endl;
-        textPlayers();
+        gracze->textPlayers(kolejka , gracze);
 
         cout << "1. zgaduj haslo" << endl;
         cout << "2. krecenie kolem" << endl;
@@ -328,6 +305,6 @@ int main()
     cout << "BRAWO!";
     exit(0);
 
-    textPlayers();
+    gracze->textPlayers(kolejka, gracze);
     Beep(523, 500);
 }
