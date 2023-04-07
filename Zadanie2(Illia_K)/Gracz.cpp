@@ -7,6 +7,34 @@ using namespace std;
 
 #include "Gracz.hpp"
 
+void Gracz::Set_Name(Gracz* gracze)
+{
+    gracze[0].imie = "Bryanusz";
+    gracze[1].imie = "Jessica ";
+    gracze[2].imie = "Nepomucen";
+}
+
+void Gracz::Change_porfel(Gracz* gracze,int& kolejka)
+{
+    gracze[kolejka].portfel += gracze[kolejka].kasa;
+}
+
+void Gracz::Kasa_Zero(Gracz* gracze,int& kolejka)
+{
+    gracze[kolejka].kasa = 0;
+}
+
+void Gracz::Print_name(Gracz* gracze, int& kolejka)
+{
+    cout << gracze[kolejka].imie << ": Podaj litere" << endl;
+}
+
+void Gracz::zgadl_kwota(Gracz* gracze, int& kolejka, int& zgadl , int& kwota)
+{
+    gracze[kolejka].kasa += kwota * zgadl;
+    cout << endl << gracze[kolejka].imie << "\033[1;32m " << gracze[kolejka].kasa << "\033[0m";
+}
+
 void Gracz::textPlayers(int kolejka , Gracz* gracze)
 {
     int i;
@@ -61,4 +89,7 @@ void Gracz::Read_File(vector<string>& hasla)
 
     }
     strum.close();
+    for (string item : hasla)
+        cout << item << endl;
+    cout << endl << endl;
 }

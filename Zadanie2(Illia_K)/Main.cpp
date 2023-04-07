@@ -28,6 +28,32 @@ int jestSamogloska(char c)
 
 }
 
+void Invisible_Word(string& haslo , int maska[100], int& i, int& n)
+{
+    for (i = 0; i < n; i++)
+    {
+        if (haslo[i] == ' ')
+            maska[i] = 0;
+        else
+            maska[i] = 1;
+    }
+}
+
+void Show_Invisible_Word(int maska[100],int&i,int&n,string &haslo)
+{
+    cout << "\033[47m" << "\033[31m";
+    for (i = 0; i < n; i++)
+    {
+
+        if (maska[i] == 1)
+            cout << ".";
+        else
+            cout << haslo[i];
+    }
+    cout << "\033[0m";
+    cout << endl;
+}
+
 int main()
 {
     SetConsoleOutputCP(1250);
@@ -41,44 +67,18 @@ int main()
 
     gracze->Read_File(*&hasla);
 
-    for (string item : hasla)
-        cout << item << endl;
-    cout << endl << endl;
-
     assert(hasla.size() > 0);
-    j = rand() % hasla.size(); // losujemy j-te haslo z przedzialu 0 ... size - 1
-    //cout << hasla[j];
+    j = rand() % hasla.size();
     haslo = hasla[j];
     n = haslo.size();
 
-    gracze[0].imie = "Bryanusz";
-    gracze[1].imie = "Jessica ";
-    gracze[2].imie = "Nepomucen";
+    gracze->Set_Name(gracze);
 
-    for (i = 0; i < n; i++)
-    {
-        if (haslo[i] == ' ')
-            maska[i] = 0;
-        else
-            maska[i] = 1;
-    }
+    Invisible_Word(haslo,maska, i, n);
 
     do
-    {
-        // cout << "\033[2J";
-
-        cout << "\033[47m" << "\033[31m";
-        for (i = 0; i < n; i++)
-        {
-
-            if (maska[i] == 1)
-                cout << ".";
-            else
-                cout << haslo[i];
-        }
-
-        cout << "\033[0m";
-        cout << endl;
+    {  
+        Show_Invisible_Word(maska,i,n,haslo);
 
         sa_spolgloski = 0;
         kwota = 0;
@@ -89,19 +89,13 @@ int main()
                 sa_spolgloski = 1;
                 break;
             }
-
         if (sa_spolgloski)
             cout << " -- Spolgloski sa --" << endl;
 
-
-        //cout << gracze[kolejka].imie << " " << endl;
         gracze->textPlayers(kolejka , gracze);
 
         cout << "1. zgaduj haslo" << endl;
         cout << "2. krecenie kolem" << endl;
-
-        // TODO tylko 1 i 2, nie mozna wprowadzac liter
-
         wybor = gracze->WczytajWybor(gracze);
 
         if (wybor == '1')
@@ -112,7 +106,7 @@ int main()
                 c = toupper(c);
             if (haslo == proba) {
                 cout << endl << " !!!!!!!!!! =======   WYGRANA ========== !!!!!!!!!!!!!" << endl;
-                gracze[kolejka].portfel += gracze[kolejka].kasa;
+                gracze->Change_porfel(gracze,kolejka);
                 break;
             }
             else
@@ -122,15 +116,8 @@ int main()
                 cout << endl << " !!!!!!!!!! =======   ZLE ========== !!!!!!!!!!!!!" << endl;
                 cout << endl << "=================================================" << endl;
                 continue;
-
-
             }
-
-
-
         }
-
-
         rezultat = "";
         i = rand() % 15;
         if (Kolo[i] == 0)
@@ -145,42 +132,23 @@ int main()
             kwota = Kolo[i];
         }
 
-        // Strata kolejki i bankrut
         if ((Kolo[i] == 0) || (Kolo[i] == -1))
         {
-            if (Kolo[i] == -1) // bankrut
-                gracze[kolejka].kasa = 0;
-
+            if (Kolo[i] == -1)
+                gracze->Kasa_Zero(gracze,kolejka);
             kolejka = (kolejka + 1) % 3;
             suma = 1;
             cout << endl << "=================================================" << endl;
-
-            // TODO
-            // sleep for
-            // kupowanie samoglosek
-
             continue;
-
         }
 
-
-
-
-
-        cout << gracze[kolejka].imie << ": Podaj litere" << endl;
-
-
-
+        gracze->Print_name(gracze, kolejka);
         literka = gracze->WczytajZnak();
-
-
         zgadl = 0;
-
         if (jestSamogloska(literka))
-            cout << "samogloska";
+            cout << "samogloska" << endl;
         else
-            cout << "spolgloska";
-        cout << endl;
+            cout << "spolgloska" << endl;
 
         for (i = 0; i < n; i++)
         {
@@ -192,12 +160,8 @@ int main()
 
         if (zgadl)
         {
-            cout << "OK";
-            gracze[kolejka].kasa += kwota * zgadl;
-
-            cout << endl << gracze[kolejka].imie << "\033[1;32m " << gracze[kolejka].kasa << "\033[0m";
-
-
+            cout << "OK" << endl;
+            gracze->zgadl_kwota(gracze, kolejka,zgadl,kwota);
         }
         else {
             cout << "Zle!";
@@ -207,27 +171,14 @@ int main()
             suma = 1;
             continue;
         }
-
-
-
-
-        cout << endl;
-
-
-
         suma = 0;
-
         for (i = 0; i < n; i++)
         {
             suma += maska[i];
         }
-
-
-
     } while (suma);
     cout << "BRAWO!";
     exit(0);
-
     gracze->textPlayers(kolejka, gracze);
     Beep(523, 500);
 }
