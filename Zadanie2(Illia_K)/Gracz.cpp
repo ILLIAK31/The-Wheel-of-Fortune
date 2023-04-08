@@ -7,20 +7,6 @@ using namespace std;
 
 #include "Gracz.hpp"
 
-int Gracz::KOLO(Gracz* gracze,int& i)
-{
-    if (gracze->Kolo[i] == 0)
-        return 0;
-    if (gracze->Kolo[i] == -1)
-        return -1;
-}
-
-void Gracz::Kwota_KOLO(Gracz* gracze, int& i, int& kwota)
-{
-    cout << "\033[1;34m" << Kolo[i] << "\033[0m" << endl;
-    kwota = Kolo[i];
-}
-
 void Gracz::Set_Name(Gracz* gracze)
 {
     gracze[0].imie = "Bryanusz";
@@ -28,25 +14,22 @@ void Gracz::Set_Name(Gracz* gracze)
     gracze[2].imie = "Nepomucen";
 }
 
-void Gracz::Change_porfel(Gracz* gracze,int& kolejka)
+void Gracz::Read_File(vector<string>& hasla)
 {
-    gracze[kolejka].portfel += gracze[kolejka].kasa;
-}
+    ifstream strum;
+    strum.open("Data.txt");
+    setlocale(LC_CTYPE, "Polish");
+    while (!strum.eof())
+    {
+        string s;
+        getline(strum, s);
+        hasla.push_back(s);
 
-void Gracz::Kasa_Zero(Gracz* gracze,int& kolejka)
-{
-    gracze[kolejka].kasa = 0;
-}
-
-void Gracz::Print_name(Gracz* gracze, int& kolejka)
-{
-    cout << gracze[kolejka].imie << ": Podaj litere" << endl;
-}
-
-void Gracz::zgadl_kwota(Gracz* gracze, int& kolejka, int& zgadl , int& kwota)
-{
-    gracze[kolejka].kasa += kwota * zgadl;
-    cout << endl << gracze[kolejka].imie << "\033[1;32m " << gracze[kolejka].kasa << "\033[0m";
+    }
+    strum.close();
+    for (string item : hasla)
+        cout << item << endl;
+    cout << endl << endl;
 }
 
 void Gracz::textPlayers(int kolejka , Gracz* gracze)
@@ -54,14 +37,38 @@ void Gracz::textPlayers(int kolejka , Gracz* gracze)
     int i;
     cout << "\n";
     for (i = 0; i < 3; i++) {
-        if (i == kolejka) {
+        if (i == kolejka)
             cout << "\033[1;34m";
-        }
         cout << gracze[i].imie << "\t" << gracze[i].kasa << "\n";
         cout << "\033[0m";
 
     }
     cout << "\n";
+}
+
+int& Gracz::Kasa(Gracz* gracze, int& kolejka)
+{
+    return gracze[kolejka].kasa;
+}
+
+int& Gracz::Portfel(Gracz* gracze,int& kolejka)
+{
+    return gracze[kolejka].portfel;
+}
+
+int& Gracz::KOLO(Gracz* gracze,int& i)
+{
+    return gracze->Kolo[i];
+}
+
+string& Gracz::Name(Gracz* gracze, int& kolejka)
+{
+    return gracze[kolejka].imie;
+}
+
+string& Gracz::Haslo(Gracz* gracze)
+{
+    return gracze->haslo;
 }
 
 char Gracz::WczytajZnak()
@@ -89,32 +96,3 @@ char Gracz::WczytajWybor(Gracz* gracze)
     }
     return wybor;
 }
-
-void Gracz::Read_File(vector<string>& hasla)
-{
-    ifstream strum;
-    strum.open("Data.txt");
-    setlocale(LC_CTYPE, "Polish");
-    while (!strum.eof())
-    {
-        string s;
-        getline(strum, s);
-        hasla.push_back(s);
-
-    }
-    strum.close();
-    for (string item : hasla)
-        cout << item << endl;
-    cout << endl << endl;
-}
-
-int& Gracz::Portfel(Gracz* gracze,int& kolejka)
-{
-    return gracze[kolejka].portfel;
-}
-
-int& Gracz::Kasa(Gracz* gracze, int& kolejka)
-{
-    return gracze[kolejka].kasa;
-}
-
