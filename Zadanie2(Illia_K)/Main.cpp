@@ -100,8 +100,8 @@ int main()
         if (wybor == '1')
         {
             cout << "Podaj haslo" << endl;
-            getline(cin >> ws, proba);  // wczytanie z klawiatury string z uwzgl. whitespa
-            for (auto& c : proba)  // & zapamietuje modyfikacje w petli & - referencja
+            getline(cin >> ws, proba);  
+            for (auto& c : proba) 
                 c = toupper(c);
             if (haslo == proba) {
                 cout << endl << " !!!!!!!!!! =======   WYGRANA ========== !!!!!!!!!!!!!" << endl;
