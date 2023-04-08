@@ -24,7 +24,6 @@ void Gracz::Read_File(vector<string>& hasla)
         string s;
         getline(strum, s);
         hasla.push_back(s);
-
     }
     strum.close();
     for (string item : hasla)
@@ -39,9 +38,7 @@ void Gracz::textPlayers(int kolejka , Gracz* gracze)
     for (i = 0; i < 3; i++) {
         if (i == kolejka)
             cout << "\033[1;34m";
-        cout << gracze[i].imie << "\t" << gracze[i].kasa << "\n";
-        cout << "\033[0m";
-
+        cout << gracze[i].imie << "\t" << gracze[i].kasa << "\n" << "\033[0m";
     }
     cout << "\n";
 }
@@ -113,8 +110,7 @@ void Gracz::Do_While(int& i, int& n,int maska[100], Gracz* gracze,int& sa_spolgl
         if (sa_spolgloski)
             cout << " -- Spolgloski sa --" << endl;
         gracze->textPlayers(kolejka, gracze);
-        cout << "1. zgaduj haslo" << endl;
-        cout << "2. krecenie kolem" << endl;
+        cout << "1. zgaduj haslo" << endl << "2. krecenie kolem" << endl;
         wybor = gracze->WczytajWybor(gracze);
         if (wybor == '1')
         {
@@ -131,8 +127,7 @@ void Gracz::Do_While(int& i, int& n,int maska[100], Gracz* gracze,int& sa_spolgl
             {
                 kolejka = (kolejka + 1) % 3;
                 suma = 1;
-                cout << endl << " !!!!!!!!!! =======   ZLE ========== !!!!!!!!!!!!!" << endl;
-                cout << endl << "=================================================" << endl;
+                cout << endl << " !!!!!!!!!! =======   ZLE ========== !!!!!!!!!!!!!" << endl << endl << "=================================================" << endl;
                 continue;
             }
         }
@@ -160,9 +155,6 @@ void Gracz::Do_While(int& i, int& n,int maska[100], Gracz* gracze,int& sa_spolgl
         }
         cout << gracze->Name(gracze, kolejka) << ": Podaj litere" << endl;
         literka = gracze->WczytajZnak();
-        //
-        cout << literka << endl;
-        //
         zgadl = 0;
         if (jestSamogloska(literka))
             cout << "samogloska" << endl;
@@ -222,12 +214,10 @@ void Gracz::Show_Invisible_Word(int maska[100], int& i, int& n, string& haslo)
     cout << "\033[47m" << "\033[31m";
     for (i = 0; i < n; i++)
     {
-
         if (maska[i] == 1)
             cout << ".";
         else
             cout << haslo[i];
     }
-    cout << "\033[0m";
-    cout << endl;
+    cout << "\033[0m" << endl;
 }

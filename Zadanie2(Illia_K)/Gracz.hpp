@@ -20,5 +20,4 @@ public:
     string& Haslo(Gracz* gracze);
     char WczytajZnak();
     char WczytajWybor(Gracz* gracze);
-    
 };
