@@ -105,7 +105,9 @@ int main()
                 c = toupper(c);
             if (haslo == proba) {
                 cout << endl << " !!!!!!!!!! =======   WYGRANA ========== !!!!!!!!!!!!!" << endl;
-                gracze->Change_porfel(gracze,kolejka);
+                //gracze->Change_porfel(gracze,kolejka);
+                //gracze[kolejka].portfel += gracze[kolejka].kasa;
+                gracze->Portfel(gracze, kolejka) += gracze->Kasa(gracze, kolejka);
                 break;
             }
             else

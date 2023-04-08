@@ -107,3 +107,14 @@ void Gracz::Read_File(vector<string>& hasla)
         cout << item << endl;
     cout << endl << endl;
 }
+
+int& Gracz::Portfel(Gracz* gracze,int& kolejka)
+{
+    return gracze[kolejka].portfel;
+}
+
+int& Gracz::Kasa(Gracz* gracze, int& kolejka)
+{
+    return gracze[kolejka].kasa;
+}
+

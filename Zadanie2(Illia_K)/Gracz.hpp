@@ -5,6 +5,8 @@ private:
     int portfel = 0;
     int Kolo[16] = { -1, 0, 100, 200, 100, 200, 100, 200, 500, 500, 1000, 1000, 1500, 2000, 3000, 5000 };
 public:
+    int& Portfel(Gracz* gracze , int& kolejka);
+    int& Kasa(Gracz* gracze, int& kolejka)
     void Set_Name(Gracz* gracze);
     int KOLO(Gracz* gracze , int& i);
     void Kwota_KOLO(Gracz* gracze, int& i,int& kwota);
